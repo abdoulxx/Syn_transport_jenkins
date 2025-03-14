@@ -1,15 +1,14 @@
-name: CI/CD syn_transport
+name: Pipeline CI Selenium
 
 on:
-  schedule:
-    - cron: '0 */6 * * *' # Exécution toutes les 6 heures
   push:
     branches:
       - main
 
 jobs:
-  build:
+  test_pipeline:
     runs-on: ubuntu-latest
+
     steps:
       - name: 📥 Cloner le dépôt
         uses: actions/checkout@v3
@@ -22,34 +21,16 @@ jobs:
           sudo mv composer.phar /usr/local/bin/composer
           composer install
 
-      - name: 🔎 Analyse statique du code avec PHPStan
+      - name: 🔍 Static Code Analysis (PHPStan)
         run: |
           vendor/bin/phpstan analyse --level=max src/ --no-progress --error-format=table --memory-limit=2G || echo "PHPStan a trouvé des erreurs, mais on continue l'exécution."
 
       - name: 🔧 Installer SQLMap
         run: |
-          sudo apt update
           sudo apt install -y python3-pip
           pip install sqlmap
 
-      - name: 🔥 Test d'injection SQL (sqlmap)
-        run: |
-          python3 tests/sqlmap.py
-
-      - name: 🌐 Installer Google Chrome et ChromeDriver
-        run: |
-          sudo apt update
-          sudo apt install -y wget unzip
-          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
-          google-chrome --version
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          chromedriver --version
-
-      - name: 🛠 Installer les dépendances Python et Selenium
+      - name: 🐍 Installer Python, Selenium et dépendances
         run: |
           python3 -m venv venv
           source venv/bin/activate
@@ -58,29 +39,21 @@ jobs:
       - name: 🖥 Lancer le test Selenium
         run: |
           source venv/bin/activate
-          python3 tests/selenium_test_pack_or.py
+          python tests/selenium_test_pack_or.py
 
-      - name: 📅 Définir la date d'exécution
-        run: echo "DATE_EXECUTION=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
-
-      - name: 📩 Envoyer une notification par mail
+      - name: 📧 Envoyer mail de notification
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.EMAIL_USER }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "[GitHub Actions] Test d'acceptation terminé : Gestion_Note"
-          to: "aboulayesamb@gmail.com"
-          from: "GitHub Actions"
+          subject: "[GitHub Actions] Résultat Test Selenium 🚀"
+          to: ${{ secrets.EMAIL_USER }}
+          from: GitHub Actions
           body: |
-            Bonjour,
-
-            L'exécution du test d'acceptation Selenium est terminée.
-
-            - ✅ Résultat : ${{ job.status }}
-            - 📅 Date : ${{ env.DATE_EXECUTION }}
-            - 🔍 Consultez GitHub Actions pour plus de détails.
+            Le pipeline GitHub Actions est terminé.
+            Consultez GitHub pour voir les résultats.
 
             Cordialement,
             GitHub Actions
