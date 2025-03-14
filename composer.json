@@ -1,0 +1,15 @@
+{
+    "name": "aboul/syn_transport",
+    "autoload": {
+        "psr-4": {
+            "Aboul\\SynTransport\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "abdoulxx",
+            "email": "aboulayesamb@gmail.com"
+        }
+    ],
+    "require": {}
+}
