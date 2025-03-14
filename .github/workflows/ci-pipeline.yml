@@ -1,4 +1,4 @@
-name: CI/CD regisono
+name: CI/CD syn_transport
 
 on:
   schedule:
