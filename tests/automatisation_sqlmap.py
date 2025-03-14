@@ -2,7 +2,7 @@ import os
 import subprocess
 import datetime
 
-URL_CIBLE = "https://regisono.com/login.php?id=1"
+URL_CIBLE = "https://syn-transport.com/connexion.php?id=1"
 SQLMAP_PATH = "C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\sqlmap.exe"
 
 DATE_EXECUTION = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

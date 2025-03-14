@@ -17,7 +17,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # Fonction de connexion
 def se_connecter(email, mot_de_passe):
-    driver.get("https://regisono.com/login.php")
+    driver.get("https://syn-transport.com/connexion.php")
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "email")))
 
     driver.find_element(By.NAME, "email").send_keys(email)

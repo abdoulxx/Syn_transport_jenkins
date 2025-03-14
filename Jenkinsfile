@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/abdoulxx/gestion_note.git'
+                git branch: 'main', url: 'https://github.com/abdoulxx/Syn_transport_jenkins.git'
             }
         }
 
@@ -40,8 +40,7 @@ pipeline {
                 echo "Build stage: Compilation / Packaging (si nécessaire)"
             }
         }
-        /*
-
+        
         stage('Run Selenium Tests - Test 1') {
             steps {
                 bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\selenium_tests.py'

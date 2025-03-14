@@ -2,7 +2,7 @@
 from zapv2 import ZAPv2
 
 # URL cible
-target = 'https://regisono.com'
+target = 'https://syn-transport.com/'
 # Clé API pour ZAP (si activée)
 apiKey = '1odfud9vtbks0u32430lmt6cqc'
 

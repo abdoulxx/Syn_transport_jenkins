@@ -58,7 +58,7 @@ jobs:
       - name: 🖥 Lancer le test Selenium
         run: |
           source venv/bin/activate
-          python3 tests/selenium_test_pack_or4.py
+          python3 tests/selenium_test_pack_or.py
 
       - name: 📅 Définir la date d'exécution
         run: echo "DATE_EXECUTION=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV

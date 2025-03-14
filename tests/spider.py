@@ -3,7 +3,7 @@ import time
 from zapv2 import ZAPv2
 
 # URL de l'application cible
-target = 'https://regisono.com'
+target = 'https://syn-transport.com/'
 # Clé API de ZAP (à modifier selon ta configuration)
 apiKey = '1odfud9vtbks0u32430lmt6cqc'
 
