@@ -4,6 +4,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Fix Git configuration
+                bat '''
+                    git config --global http.version HTTP/1.1
+                    git config --global http.postBuffer 524288000
+                '''
                 git branch: 'main', url: 'https://github.com/abdoulxx/Syn_transport_jenkins.git'
             }
         }
@@ -21,7 +26,7 @@ pipeline {
                         vendor\\bin\\phpstan analyse --level=max src/ --no-progress --error-format=table --memory-limit=2G
                     ''')
                     if (exitCode != 0) {
-                        echo " PHPStan a trouvé des erreurs, mais on continue l'exécution du pipeline."
+                        echo "PHPStan a détecté des erreurs, mais on continue l'exécution du pipeline."
                     }
                 }
             }
@@ -29,9 +34,7 @@ pipeline {
 
         stage('SQL Injection Test (Automatisation)') {
             steps {
-                bat '''
-                    "C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\automatisation_sqlmap.py
-                '''
+                bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\automatisation_sqlmap.py'
             }
         }
 
@@ -52,7 +55,6 @@ pipeline {
                 bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\selenium_test_pack_or.py'
             }
         }
-        */
 
         stage('Run spider') {
             steps {
@@ -60,13 +62,13 @@ pipeline {
             }
         }
 
-        stage('Run Scan_active') {
+        stage('Run Scan Active') {
             steps {
                 bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\active_scan.py'
             }
         }
 
-        stage('Run form_authentication') {
+        stage('Run Form Authentication') {
             steps {
                 bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\form_autentification.py'
             }
