@@ -21,7 +21,7 @@ pipeline {
                         vendor\\bin\\phpstan analyse --level=max src/ --no-progress --error-format=table --memory-limit=2G
                     ''')
                     if (exitCode != 0) {
-                        echo " PHPStan a trouvé des erreurs, mais on continue l'exécution du pipeline."
+                        echo "PHPStan a trouvé des erreurs, mais on continue l'exécution du pipeline."
                     }
                 }
             }
@@ -52,7 +52,6 @@ pipeline {
                 bat '"C:\\Users\\aboul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" tests\\selenium_test_pack_or.py'
             }
         }
-        */
 
         stage('Run spider') {
             steps {
